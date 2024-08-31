@@ -17,7 +17,7 @@ function Navbar() {
       <div className="flex items-center justify-between mx-60">
         <h2
           className="flex gap-2 items-center justify-center py-4 font-bold cursor-pointer"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
         >
           PRODUCT STORE
           <img src={assets.product} alt="product logo" className="w-6" />
