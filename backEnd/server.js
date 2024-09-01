@@ -8,7 +8,7 @@ const app=express();
 app.use(cors());
 app.use(express.json());
 app.use("/products",productRoutes)
-app.listen(5000,()=>{
+app.listen(3000,()=>{
     connectDb();
     console.log("server running on servrr 5000");
 })
