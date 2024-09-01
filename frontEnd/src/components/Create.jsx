@@ -14,7 +14,7 @@ function Create() {
     event.preventDefault();
 
     axios
-      .post("http://localhost:5000/products", {
+      .post("http://localhost:3000/products", {
         name: productName,
         price: productPrice,
         image: productURL,

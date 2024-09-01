@@ -7,7 +7,7 @@ function Home() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/products")
+      .get("http://localhost:3000/products")
       .then((result) => {
         console.log("API Result:", result);
         setProducts(result.data.data);
@@ -17,7 +17,7 @@ function Home() {
   const onDeleteHandler = (id) => {
     if (confirm("Are you Sure delete This Product")) {
       axios
-        .delete("http://localhost:5000/products/" + id)
+        .delete("http://localhost:3000/products/" + id)
         .then((res) => {
           console.log(res);
           window.location.reload();

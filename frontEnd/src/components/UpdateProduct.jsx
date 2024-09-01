@@ -12,7 +12,7 @@ function UpdateProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const result = await axios.get(`http://localhost:5000/products/${id}`);
+        const result = await axios.get(`http://localhost3000/products/${id}`);
         console.log("API Result:", result.data);
         setProductName(result.data.data.name);
         setProductPrice(result.data.data.price);
@@ -28,7 +28,7 @@ function UpdateProduct() {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const result = await axios.put(`http://localhost:5000/products/${id}`, {
+      const result = await axios.put(`http://localhost:3000/products/${id}`, {
         name: productName,
         price: productPrice,
         image: productURL,
