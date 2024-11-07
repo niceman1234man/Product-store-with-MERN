@@ -2,8 +2,6 @@ import express from 'express'
 import { connectDb } from './config/db.js';
 import productRoutes from './routes/product.route.js'
 import cors from 'cors'
-
-
 const app=express();
 app.use(cors());
 app.use(express.json());
