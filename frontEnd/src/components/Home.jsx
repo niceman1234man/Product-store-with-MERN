@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import assets from "../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import  axios from "axios";
+
 function Home() {
+
+  const [cookies,removeCookie]=useCookies([]);
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  
+
+
+
+  
   useEffect(() => {
+    if(!cookies.token){
+      navigate('/login');
+     }
     axios
-      .get("http://localhost:3000/products")
+      .get("http://localhost:3000/products",{withCredentials:true,})
       .then((result) => {
         console.log("API Result:", result);
         setProducts(result.data.data);
       })
       .catch((err) => console.log("Error fetching products:", err));
-  }, []);
+  }, [cookies, navigate, removeCookie]);
   const onDeleteHandler = (id) => {
     if (confirm("Are you Sure delete This Product")) {
       axios
@@ -25,11 +36,16 @@ function Home() {
         .catch((err) => console.log(err));
     }
   };
-
+  const Logout = () => {
+    removeCookie("token");
+    navigate("/signup");
+  }
   return (
     <div
       className={`h-fit bg-gray-950 grid md:grid-cols-2 lg:grid-cols-3 p-4 mx-auto`}
+      
     >
+      <button onClick={Logout}>logout</button>
       {products.length > 0 ? (
         products.map((product) => (
           <div
