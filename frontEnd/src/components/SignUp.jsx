@@ -3,23 +3,23 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUp() {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmitHandler=()=>{
-    axios.post("",{
-        userName,
+    axios.post("http://localhost:3000/products/signup",{
+        username,
         email,
         password,
-    })
+    },{withCredentials:true})
   }
 
   return (
     <div className="bg-gray-950 text-sky-600  h-screen">
       <div className=" flex flex-col items-center justify-center bg-slate-400 p-4 mx-auto w-[500px] font-bold rounded-md shadow-2xl">
         <h2 className="text-2xl">Sign Up</h2>
-        <form className="flex flex-col justify-center">
+        <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
           <label htmlFor="uname" className="p-2">
             User Name
           </label>
