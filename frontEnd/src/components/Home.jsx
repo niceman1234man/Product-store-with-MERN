@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import assets from "../assets/assets";
+import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import  axios from "axios";
 
 function Home() {
 
   const [cookies,removeCookie]=useCookies([]);
-  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
   
-
+  const navigate = useNavigate();
 
 
   
