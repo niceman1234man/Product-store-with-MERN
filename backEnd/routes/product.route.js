@@ -12,7 +12,7 @@ router.get("/:id",getProductById)
  router.delete("/:id",deleteProduct);
  router.post('/signup',Signup);
  router.post('/login',Login);
- router.post('/',userVerify);
+ router.post('/v',userVerify);
 
 
 
