@@ -10,7 +10,7 @@ const userSchema=new mongoose.Schema({
         unique:true,
     },
     password:{
-        typr:String,
+        type:String,
         required:true,
     }
 },{timestamps:true});
