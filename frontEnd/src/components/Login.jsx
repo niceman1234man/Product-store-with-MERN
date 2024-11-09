@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import UserContext from "../Context/UserContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {setUser}=useContext(UserContext)
   const navigate = useNavigate();
 
   const onSubmitHandler = (e) => {
@@ -18,7 +20,8 @@ function Login() {
     .then(response => {
       // Handle successful login here
       toast.success("Login successful!");
-      navigate("/home"); // Redirect to home or another page
+     setUser(response.data.user);
+      navigate("/"); // Redirect to home or another page
     })
     .catch(error => {
       // Handle error here
