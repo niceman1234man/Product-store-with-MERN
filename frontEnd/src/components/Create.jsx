@@ -5,30 +5,35 @@ import { useNavigate } from "react-router-dom";
 function Create() {
   const navigate = useNavigate();
 
-  const [productName, setProductName] = useState();
-  const [productPrice, setProductPrice] = useState();
-  const [productURL, setProductURL] = useState();
-  const [errorMessage, setErrorMessage] = useState();
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productURL, setProductURL] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    axios
-      .post("http://localhost:3000/products", {
+    // Reset error message before making the request
+    setErrorMessage("");
+
+    try {
+      const result = await axios.post("http://localhost:3000/products", {
         name: productName,
         price: productPrice,
         image: productURL,
-      })
-      .then((result) => {
-        console.log(result);
-        alert("New Product Added Successfully !!!");
-        navigate("/home");
-      })
-      .catch((err) => console.log(err));
+      });
+      console.log(result);
+      alert("New Product Added Successfully!");
+      navigate("/home");
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Failed to add the product. Please try again.");
+    }
   };
 
   return (
-    <div className="bg-gray-950 h-[100vh] flex flex-col items-center justify-center">
+    <div className="bg-gray-950 h-screen flex flex-col items-center justify-center">
       <h2 className="text-sky-500 py-2 text-2xl">Create New Product</h2>
       <div className="w-[30%] flex items-center justify-center mx-auto">
         <form
@@ -41,6 +46,7 @@ function Create() {
             type="text"
             placeholder="Product Name"
             className="p-2 m-2 rounded-md outline-sky-600"
+            required // Ensure this field is required
           />
           <input
             onChange={(e) => setProductPrice(e.target.value)}
@@ -48,12 +54,14 @@ function Create() {
             placeholder="Product Price"
             className="p-2 m-2 rounded-md outline-sky-600"
             min="0" // Prevent negative numbers
+            required // Ensure this field is required
           />
           <input
             onChange={(e) => setProductURL(e.target.value)}
             type="text"
             placeholder="Image URL"
             className="p-2 m-2 rounded-md outline-sky-600"
+            required // Ensure this field is required
           />
           <button type="submit" className="p-2 m-2 rounded-md bg-sky-900">
             Create Product
