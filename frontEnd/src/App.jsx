@@ -6,6 +6,7 @@ import UpdateProduct from "./components/UpdateProduct";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import UserContextProvider from "./Context/UserContextProvider";
 
 function App() {
   return (
