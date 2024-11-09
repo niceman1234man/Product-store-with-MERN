@@ -1,60 +1,84 @@
 import mongoose from "mongoose";
 import User from "../models/userModel.js";
 import { CreateSecreteToken } from "../util/SecreteToken.js";
-import bcrypt from 'bcrypt'
-export const Signup=async(req,res,next)=>{
+import bcrypt from 'bcrypt';
 
+export const Signup = async (req, res, next) => {
     try {
-        const {  username,email, password, } = req.body;
-        if(!username||!email||!password){
-            return res.json({message:"all fields required"})
-        }
-        const existeduser=User.findOne({email});
-        if(existeduser){
-            return res.json({message:"user already existed"});
+        const { username, email, password } = req.body;
 
+        // Check for missing fields
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "All fields are required" });
         }
-        password=bcrypt.hash(password,12);
-        const user=await User.create({username,email,password});
-        const token=CreateSecreteToken(user._id);
-        res.cookie("token",token,{
-            withCredentials:true,
-            httpOnly:false,
-        })
-       
-  res.status(201).json({success:true,message:"user sign up successfully"})
-  next();
+
+        // Check if the user already exists
+        const existedUser = await User.findOne({ email }); // Await the result of findOne
+        if (existedUser) {
+            return res.status(409).json({ message: "User already exists" });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 12); // Await the hash operation
+
+        // Create a new user
+        const user = await User.create({ username, email, password: hashedPassword });
+
+        // Create a token
+        const token = CreateSecreteToken(user._id);
+
+        // Set the cookie
+        res.cookie("token", token, {
+            httpOnly: true, // Set to true for security
+            secure: false, // Change to true in production with HTTPS
+            sameSite: "Strict" // Optional: improve security
+        });
+
+        // Send response
+        res.status(201).json({ success: true, message: "User signed up successfully" });
     } catch (error) {
-        console.log(error);
+        console.error("Signup error:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 
-export const Login=async(req,res,next)=>{
 
-try {
-    const {email,password}=req.body;
-    password=bcrypt.hash(password,12);
-    if(!email||!password){
-        return res.json({message:"all fields required"});
+export const Login = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+
+        // Check for missing fields
+        if (!email || !password) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // Find the user by email
+        const user = await User.findOne({ email }); // Await the result of findOne
+        if (!user) {
+            return res.status(404).json({ message: "User does not exist" });
+        }
+
+        // Compare the provided password with the stored password
+        const isPasswordValid = await bcrypt.compare(password, user.password); // Await the comparison
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "Incorrect password" });
+        }
+
+        // Create a token
+        const token = CreateSecreteToken(user._id);
+
+        // Set the cookie
+        res.cookie("token", token, {
+            httpOnly: true, // Set to true for security
+            secure: false, // Change to true in production with HTTPS
+            sameSite: "Strict" // Optional: improve security
+        });
+
+        // Send response
+        res.status(200).json({ success: true, message: "User logged in successfully" });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-const user=User.findOne({email});
-if(!user){
-    return res.json({message:"user not exist"});
-}
-if(!bcrypt.compare(password,user.password)){
-return res.json({message:"Incorrect Password"});
-}
-
-const token=CreateSecreteToken(user._id);
-res.cookie("token",token,{
-    withCredentials:true,
-    httpOnly:false,
-})
-res.status(201).json({sucess:true,message:"user login successfully"});
-next();
-} catch (error) {
-    console.log(error);
-}
-
-}
+};
