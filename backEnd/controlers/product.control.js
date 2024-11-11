@@ -2,8 +2,13 @@ import Product from '../models/product.model.js';
 import mongoose from 'mongoose';
 
 export const getProduct=async(req,res)=>{
+
+
+   
+        
     try {
-     const products=await Product.find({});
+        const userId = req.params.userId;
+     const products=await Product.find({userId});
      res.status(200).json({success:true,data:products});
  
     } catch (error) {
