@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,25 +8,28 @@ import UserContext from "../Context/UserContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {setUser}=useContext(UserContext)
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies([]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/products/login", {
-      email,
-      password,
-    })
-    .then(response => {
-      // Handle successful login here
-      toast.success("Login successful!");
-     setUser(response.data.user);
-      navigate("/"); // Redirect to home or another page
-    })
-    .catch(error => {
-      // Handle error here
-      toast.error("Login failed. Please check your credentials.");
-    });
+    axios.post("http://localhost:3000/products/login", { email, password })
+      .then(response => {
+        // Handle successful login here
+     
+        
+        // Set user data and token
+        setUser(response.data.user);
+        setCookie("token", response.data.token, { path: '/' }); // Store token in cookies
+        
+        // Redirect to home
+        navigate("/"); // Ensure this line is executed
+      })
+      .catch(error => {
+        // Handle error here
+        toast.error("Login failed. Please check your credentials.");
+      });
   };
 
   return (
@@ -34,34 +37,28 @@ function Login() {
       <div className="flex flex-col items-center justify-center mx-auto w-[500px] bg-slate-400 p-4 rounded-md">
         <h2 className="text-2xl">LOGIN</h2>
         <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
-          <label htmlFor="email" className="p-2">
-            Email
-          </label>
+          <label htmlFor="email" className="p-2">Email</label>
           <input
-            id="email" // Add id attribute
+            id="email"
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
             className="p-2 w-[400px] outline-green-400"
           />
-          <label htmlFor="password" className="p-2">
-            Password
-          </label>
+          <label htmlFor="password" className="p-2">Password</label>
           <input
-            id="password" // Add id attribute
+            id="password"
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="*******"
             className="p-2 w-[400px] outline-green-400"
           />
-          <button type="submit" className="p-2 bg-sky-200 m-2 rounded-lg">
-            Login
-          </button>
+          <button type="submit" className="p-2 bg-sky-200 m-2 rounded-lg">Login</button>
         </form>
         <p>
           Have No An Account? <Link to="/signup">Sign Up</Link>
         </p>
-        <ToastContainer />
+   
       </div>
     </div>
   );
