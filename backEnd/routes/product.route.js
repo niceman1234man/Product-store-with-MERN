@@ -4,8 +4,7 @@ import { Signup,Login } from '../controlers/userController.js';
 import { userVerify } from '../Authmiddleware/authmidlewar.js';
 
 const router=express.Router();
-
-router.get("/",getProduct);
+router.get("/user/:userId",getProduct);
 router.get("/:id",getProductById)
  router.put("/:id",updateproduct );
  router.post("/",createProduct);
