@@ -13,19 +13,27 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!cookies.token) {
-      navigate("/login");
-    } else if (user) {
-      // Fetch products using the user's ID
-      axios
-        .get(`http://localhost:3000/products/user/${user._id}`, { withCredentials: true })
-        .then((result) => {
-          console.log("API Result:", result);
+    const fetchdata = async () => {
+      try {
+        // if (!cookies.token) {
+        //   alert("cookie error");
+        //   navigate("/login");
+        // } else 
+        if (user) {
+          const result = await axios.get(`http://localhost:3000/products/user/${user._id}`, { withCredentials: true });
+          console.log("API Result:", result); // Check API response
           setProductsLocal(result.data.data); // Set products to local state
-        })
-        .catch((err) => console.log("Error fetching products:", err));
-    }
-  }, [cookies, navigate, user]);
+        } else {
+          console.log("User is not set in context."); // Log if user is missing
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
+    };
+  
+    fetchdata();
+  }, [cookies, navigate, user, setProductsLocal]); // Add setProductsLocal if necessary
+  
 
   const onDeleteHandler = (id) => {
     if (confirm("Are you sure you want to delete this product?")) {
