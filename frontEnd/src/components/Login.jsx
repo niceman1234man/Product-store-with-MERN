@@ -15,21 +15,18 @@ function Login() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     axios.post("http://localhost:3000/products/login", { email, password })
-      .then(response => {
-        // Handle successful login here
-     
-        
-        // Set user data and token
-        setUser(response.data.user);
-        setCookie("token", response.data.token, { path: '/' }); // Store token in cookies
-        
-        // Redirect to home
-        navigate("/"); // Ensure this line is executed
-      })
-      .catch(error => {
-        // Handle error here
-        toast.error("Login failed. Please check your credentials.");
-      });
+  .then((response) => {
+    console.log("Response received:", response);
+    setUser(response.data.user);
+    setCookie("token", response.data.token, { path: '/' });
+    console.log("Navigating to home...");
+    navigate("/");
+  })
+  .catch(error => {
+    console.log("Error:", error);
+    toast.error("Login failed. Please check your credentials.");
+  });
+
   };
 
   return (
