@@ -2,21 +2,26 @@ import User from "../models/userModel.js";
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 dotenv.config();
-export const userVerify=(req,res)=>{
-    const token=req.cookies.token;
-    if(!token){
-        return res.json({status:false});
-    }
-    jwt.verify(token,process.env.TOKEN_KEY,(err,data)=>{
-        if(err){
-            return res.json({status:false});
-        }else{
-        const user=User.findById(data.id);
-        if(user){
-            return res.json({status:true,user:data.username});
-        }else{
-            return res.json({status:false});
-        }
-        }
+export const userVerify=(req,res,next)=>{
+const authHeader=req.headers['authorization'];
+
+const token=authHeader&&authHeader.split(" ")[1];
+if(!token){
+  return  res.status(401).json({
+        succuss:false,message:"access denied. No token provided"
     })
+
+
+
+}
+try {
+    const decodedTokenInfo=jwt.verify(token,process.env.TOKEN_KEY);
+    console.log(decodedTokenInfo);
+    req.userInfo=decodedTokenInfo;
+    next();
+ } catch (error) {
+     console.log(error);
+ }
+ 
+   
 }
