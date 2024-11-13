@@ -1,23 +1,38 @@
 import Product from '../models/product.model.js';
 import mongoose from 'mongoose';
 
-export const getProduct=async(req,res)=>{
+export const getProduct = async (req, res) => {
+    const { userId } = req.userInfo;
 
-
-   
-        
-    try {
-        const userId = req.params.userId;
-     const products=await Product.find({userId});
-     res.status(200).json({success:true,data:products});
- 
-    } catch (error) {
-     console.log("error",error.message);
-     res.status(500).json({success:false,message:"server failed"})
+    if (!userId) {
+        return res.status(400).json({
+            success: false,
+            message: "User ID is required."
+        });
     }
- };
 
+    console.log("User ID:", userId); // Debugging log
 
+    try {
+        // Use mongoose.Types.ObjectId to convert userId to ObjectId
+        const products = await Product.find({ user: new mongoose.Types.ObjectId(userId) });
+
+        console.log("Fetched Products:", products); // Log fetched products
+
+        if (!products.length) {
+            return res.status(404).json({
+                success: false,
+                message: "No products found for this user."
+            });
+        }
+
+        res.status(200).json({ success: true, data: products });
+
+    } catch (error) {
+        console.error("Error fetching products:", error.message);
+        res.status(500).json({ success: false, message: "Server failed to fetch products." });
+    }
+};
  export const getProductById=async(req,res)=>{
     try {
         const {id}=req.params;
@@ -56,6 +71,9 @@ export const getProduct=async(req,res)=>{
 };
 
 export const createProduct = async (req, res) => {
+  const {userId,email,userName}=req.userInfo;
+
+
     try {
       // Validate that all required fields are provided
       const { name, price, image } = req.body;
@@ -68,7 +86,7 @@ export const createProduct = async (req, res) => {
         name,
         price,
         image,
-        user: req.user._id, // `user` is added to req by the auth middleware
+        user:userId, // `user` is added to req by the auth middleware
       });
   
       // Save the product to the database
