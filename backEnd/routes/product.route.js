@@ -5,14 +5,14 @@ import { userVerify } from '../Authmiddleware/authmidlewar.js';
 import auth from '../Auth/auth.js';
 
 const router=express.Router();
-router.get("/user/:userId",getProduct);
+router.get("/user/",userVerify,getProduct);
 router.get("/:id",getProductById)
  router.put("/:id",updateproduct );
- router.post("/",auth,createProduct);
+ router.post("/",userVerify,createProduct);
  router.delete("/:id",deleteProduct);
  router.post('/signup',Signup);
  router.post('/login',Login);
- router.post('/v',userVerify);
+//  router.post('/v',userVerify);
 
 
 
