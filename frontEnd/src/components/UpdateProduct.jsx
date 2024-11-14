@@ -3,14 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useColor } from "../Context/ColorContextProvider";
 function UpdateProduct() {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productURL, setProductURL] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
-
+const {color}=useColor();
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -50,7 +50,7 @@ function UpdateProduct() {
   };
 
   return (
-    <div className="bg-gray-950 h-[100vh] flex flex-col items-center justify-center">
+    <div className={`${color} h-[100vh] flex flex-col items-center justify-center`}>
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
       <h2 className="text-sky-500 py-2 px-auto text-2xl">Update Product</h2>
       <div className="w-[30%] flex items-center justify-center mx-auto">
