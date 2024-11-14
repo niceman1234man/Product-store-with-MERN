@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateProduct() {
   const [productName, setProductName] = useState("");
@@ -12,13 +14,14 @@ function UpdateProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const result = await axios.get(`http://localhost3000/products/${id}`);
+        const result = await axios.get(`http://localhost:3000/products/${id}`);
         console.log("API Result:", result.data);
         setProductName(result.data.data.name);
         setProductPrice(result.data.data.price);
         setProductURL(result.data.data.image);
       } catch (err) {
         console.log("Error fetching product:", err);
+        toast.error("Failed to fetch product details.");
       }
     };
 
@@ -28,21 +31,27 @@ function UpdateProduct() {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      const result = await axios.put(`http://localhost:3000/products/${id}`, {
-        name: productName,
-        price: productPrice,
-        image: productURL,
-      });
-      console.log(result);
-      alert("Product Updated Successfully!!!");
-      navigate("/home");
+      const result = await axios.put(
+        `http://localhost:3000/products/${id}`,
+        {
+          name: productName,
+          price: productPrice,
+          image: productURL,
+        },
+        { withCredentials: true }
+      );
+      console.log("Update result:", result);
+      toast.success("Product Updated Successfully!");
+      navigate("/");
     } catch (err) {
       console.log("Error updating product:", err);
+      toast.error("Failed to update the product. Please try again.");
     }
   };
 
   return (
-    <div className="bg-gray-950 h-[100vh] flex flex-col items-center justify-center ">
+    <div className="bg-gray-950 h-[100vh] flex flex-col items-center justify-center">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
       <h2 className="text-sky-500 py-2 px-auto text-2xl">Update Product</h2>
       <div className="w-[30%] flex items-center justify-center mx-auto">
         <form
@@ -57,7 +66,7 @@ function UpdateProduct() {
             onChange={(e) => setProductName(e.target.value)}
           />
           <input
-            type="text"
+            type="number"
             placeholder="Product Price"
             className="p-2 m-2 rounded-md outline-sky-600"
             value={productPrice}
