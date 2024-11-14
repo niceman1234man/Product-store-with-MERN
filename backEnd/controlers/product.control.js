@@ -71,7 +71,7 @@ export const getProduct = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  const {userId,email,userName}=req.userInfo;
+  const {userId}=req.userInfo;
 
 
     try {
