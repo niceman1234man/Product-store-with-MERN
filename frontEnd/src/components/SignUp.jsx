@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link } from "react-router-dom";
+import { useColor } from "../Context/ColorContextProvider";
 function SignUp() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+   const {color}=useColor();
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -23,8 +24,8 @@ function SignUp() {
   };
 
   return (
-    <div className="bg-gray-950 text-sky-600 h-screen">
-      <div className="flex flex-col items-center justify-center bg-slate-400 p-4 mx-auto w-[500px] font-bold rounded-md shadow-2xl">
+    <div className={`${color} text-sky-600 h-screen`}>
+      <div className="flex flex-col items-center justify-center bg-slate-400 p-4 mx-auto w-[500px] font-bold shadow-2xl">
         <h2 className="text-2xl">Sign Up</h2>
         <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
           <label htmlFor="username" className="p-2">
@@ -57,12 +58,12 @@ function SignUp() {
             placeholder="*******"
             className="p-2 outline-green-400 w-[400px]"
           />
-          <button type="submit" className="p-2 bg-sky-200 m-2 rounded-lg">
+          <button type="submit" className="p-2 bg-sky-200 my-4 rounded-lg w-[30%] mx-auto">
             Sign Up
           </button>
         </form>
         <p>
-          Already Have An Account? <Link to="/login">Login</Link>
+          Already Have An Account? <Link to="/login" className="text-purple-900">Login</Link>
         </p>
       </div>
     </div>
