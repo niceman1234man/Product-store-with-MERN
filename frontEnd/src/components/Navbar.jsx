@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
+import { useColor } from "../Context/ColorContextProvider";
 
 function Navbar() {
   const navigate = useNavigate();
-  const [color, setColor] = useState("bg-gray-950");
-
-  const toggleColor = () => {
-    setColor((prevColor) =>
-      prevColor === "bg-gray-950" ? "bg-white" : "bg-gray-950"
-    );
-  };
+  const {color,toggleColor}=useColor();
 
   return (
     <div className={`${color} text-sky-400 px-auto`}>
