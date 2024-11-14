@@ -6,11 +6,11 @@ import UpdateProduct from "./components/UpdateProduct";
 import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
-import UserContextProvider from "./Context/UserContextProvider";
+import ColorContextProvider from "./Context/ColorContextProvider";
 
 function App() {
   return (
-    <UserContextProvider>
+    <ColorContextProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,7 +19,7 @@ function App() {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={<Login/>} />
       </Routes>
-    </UserContextProvider>
+    </ColorContextProvider>
   );
 }
 
