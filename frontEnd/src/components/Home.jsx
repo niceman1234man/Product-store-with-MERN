@@ -1,59 +1,70 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import assets from "../assets/assets";
-import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../Context/UserContext";
-
+import { useCookies } from "react-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useColor } from "../Context/ColorContextProvider";
 
 function Home() {
+  const {color}=useColor();
   const [cookies, removeCookie] = useCookies([]);
-  const { user, setUser } =useContext(UserContext);// Access user from context
   const [products, setProductsLocal] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchdata = async () => {
+    const fetchData = async () => {
+      // if (!cookies.token) {
+      //   navigate("/login");
+      // }
       try {
-        // if (!cookies.token) {
-        //   alert("cookie error");
-        //   navigate("/login");
-        // } else 
-        if (user) {
-          const result = await axios.get(`http://localhost:3000/products/user/${user._id}`, { withCredentials: true });
-          console.log("API Result:", result); // Check API response
-          setProductsLocal(result.data.data); // Set products to local state
-        } else {
-          console.log("User is not set in context."); // Log if user is missing
-        }
+        const result = await axios.get("http://localhost:3000/products/user", {
+          withCredentials: true,
+        });
+        console.log("API Result:", result); // Check API response
+        setProductsLocal(result.data.data); // Set products to local state
       } catch (err) {
         console.error("Error fetching products:", err);
+        toast.error("Failed to load products. Please try again.");
       }
     };
-  
-    fetchdata();
-  }, [cookies, navigate, user, setProductsLocal]); // Add setProductsLocal if necessary
-  
 
-  const onDeleteHandler = (id) => {
-    if (confirm("Are you sure you want to delete this product?")) {
-      axios
-        .delete(`http://localhost:3000/products/${id}`, { withCredentials: true })
-        .then(() => {
-          setProductsLocal(products.filter((product) => product._id !== id)); // Update local state
-        })
-        .catch((err) => console.log(err));
+    fetchData();
+  }, [cookies,navigate,removeCookie]);
+
+
+  // Delete a product
+  const onDeleteHandler = async (id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await axios.delete(`http://localhost:3000/products/${id}`, {
+          withCredentials: true,
+        });
+        // Update local state after deletion
+        setProductsLocal((prevProducts) => prevProducts.filter((product) => product._id !== id));
+        toast.success("Product deleted successfully");
+      } catch (err) {
+        console.error("Error deleting product:", err);
+        toast.error("Failed to delete product. Please try again.");
+      }
     }
   };
 
-  const Logout = () => {
+  // Logout function
+  const handleLogout = () => {
     removeCookie("token");
-    navigate("/signup");
+    navigate("/login"); // Redirect to login page
   };
 
   return (
-    <div className={`h-fit bg-gray-950 grid md:grid-cols-2 lg:grid-cols-3 p-4 mx-auto`}>
-      <button onClick={Logout}>Logout</button>
+    <div className={`h-fit ${color}`}>
+       <button onClick={handleLogout} className="text-white p-2 m-4 bg-red-500 rounded ">
+        Logout
+      </button>
+      <ToastContainer />
+     
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 p-4 mx-auto">
+   
       {products.length > 0 ? (
         products.map((product) => (
           <div
@@ -82,6 +93,7 @@ function Home() {
       ) : (
         <h1 className="text-white text-center text-2xl">No products available</h1>
       )}
+    </div>
     </div>
   );
 }
