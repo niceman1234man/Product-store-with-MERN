@@ -7,6 +7,8 @@ import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import ColorContextProvider from "./Context/ColorContextProvider";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/update/:id" element={<UpdateProduct />} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/forget" element={<ForgotPassword/>}/>
+        <Route path="/reset" element={<ResetPassword/>}/>
       </Routes>
     </ColorContextProvider>
   );
