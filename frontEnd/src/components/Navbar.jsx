@@ -8,7 +8,7 @@ function Navbar() {
   const {color,toggleColor}=useColor();
 
   return (
-    <div className={`${color} text-sky-400 px-auto  py-4`}>
+    <div className={`fixed ${color} text-sky-400 px-auto w-[1240px]  py-4 h-[10%]`}>
       <div className="flex items-center justify-between mx-60">
         <h2
           className="flex gap-2 items-center justify-center py-4 font-bold cursor-pointer"
