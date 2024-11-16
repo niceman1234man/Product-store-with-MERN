@@ -32,7 +32,7 @@ function Login() {
   };
 
   return (
-    <div className={`${color} text-sky-600 h-screen`}>
+    <div className={`h-[90vh] ${color} text-sky-600  flex  justify-center items-center`}>
       <ToastContainer />
       <div className="flex flex-col items-center justify-center mx-auto w-[500px] bg-slate-400 p-4  ">
         <h2 className="text-2xl">LOGIN</h2>
