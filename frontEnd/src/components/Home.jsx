@@ -57,7 +57,9 @@ function Home() {
   };
 
   return (
+    <div className="h-[90vh]">
     <div className={`h-fit ${color}`}>
+     
        <button onClick={handleLogout} className="text-white p-2 m-4 bg-red-500 rounded ">
         Logout
       </button>
@@ -93,6 +95,7 @@ function Home() {
       ) : (
         <h1 className="text-white text-center text-2xl">No products available</h1>
       )}
+    </div>
     </div>
     </div>
   );
