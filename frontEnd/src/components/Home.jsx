@@ -13,10 +13,13 @@ function Home() {
   const [products, setProductsLocal] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("Token:", cookies.token); // Debugging token value
+    if (!cookies.token) {
+      console.log("No token found, navigating to login...");
+      navigate("/login");
+      return;
+    }
     const fetchData = async () => {
-      // if (!cookies.token) {
-      //   navigate("/login");
-      // }
       try {
         const result = await axios.get("http://localhost:3000/products/user", {
           withCredentials: true,
@@ -28,9 +31,10 @@ function Home() {
         toast.error("Failed to load products. Please try again.");
       }
     };
-
     fetchData();
-  }, [cookies,navigate,removeCookie]);
+  }, [cookies.token, navigate]);
+  
+  
 
 
   // Delete a product
@@ -50,22 +54,15 @@ function Home() {
     }
   };
 
-  // Logout function
-  const handleLogout = () => {
-    removeCookie("token");
-    navigate("/login"); // Redirect to login page
-  };
 
   return (
-    <div className="h-[90vh]">
+    <div className="h-[90vh]  ">
     <div className={`h-fit ${color}`}>
      
-       <button onClick={handleLogout} className="text-white p-2 m-4 bg-red-500 rounded ">
-        Logout
-      </button>
+      
       <ToastContainer />
      
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 p-4 mx-auto">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 py-12 mx-auto  gap-3">
    
       {products.length > 0 ? (
         products.map((product) => (
