@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import ColorContextProvider from "./Context/ColorContextProvider";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/forget" element={<ForgotPassword/>}/>
         <Route path="/reset" element={<ResetPassword/>}/>
       </Routes>
+      <Footer/>
     </ColorContextProvider>
   );
 }
