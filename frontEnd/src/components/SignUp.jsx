@@ -24,7 +24,7 @@ function SignUp() {
   };
 
   return (
-    <div className={`${color} text-sky-600 h-screen`}>
+    <div className={`${color} text-sky-600 h-[90vh] flex justify-center items-center`}>
       <div className="flex flex-col items-center justify-center bg-slate-400 p-4 mx-auto w-[500px] font-bold shadow-2xl">
         <h2 className="text-2xl">Sign Up</h2>
         <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
