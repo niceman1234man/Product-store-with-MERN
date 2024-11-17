@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useColor } from "../Context/ColorContextProvider";
 
+
 function Home() {
   const {color}=useColor();
   const [cookies, removeCookie] = useCookies([]);
@@ -16,7 +17,7 @@ function Home() {
     console.log("Token:", cookies.token); // Debugging token value
     if (!cookies.token) {
       console.log("No token found, navigating to login...");
-      navigate("/login");
+      navigate("/");
       return;
     }
     const fetchData = async () => {
@@ -57,11 +58,17 @@ function Home() {
 
   return (
     <div className="h-[90vh]  ">
-    <div className={`h-fit ${color}`}>
+    <div className={`h-fit ${color} py-16`}>
      
       
       <ToastContainer />
-     
+      <div className="flex justify-end mr-8"><img
+            src={assets.add}
+            alt="add"
+            onClick={() => navigate("/create")}
+            className="bg-slate-400 w-6 cursor-pointer "
+          /></div>
+      
     <div className="grid md:grid-cols-2 lg:grid-cols-3 py-12 mx-auto  gap-3">
    
       {products.length > 0 ? (
