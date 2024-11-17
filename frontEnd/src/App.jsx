@@ -16,11 +16,11 @@ function App() {
     <ColorContextProvider>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/create" element={<Create />} />
         <Route path="/update/:id" element={<UpdateProduct />} />
         <Route path="/signup" element={<SignUp/>} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Login/>} />
         <Route path="/forget" element={<ForgotPassword/>}/>
         <Route path="/reset" element={<ResetPassword/>}/>
       </Routes>
