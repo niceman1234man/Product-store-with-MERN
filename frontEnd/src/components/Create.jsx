@@ -50,6 +50,8 @@ function Create() {
           className="text-black flex flex-col justify-center p-10  mx-auto bg-slate-600  w-full max-w-md "
         >
             <h2 className="text-sky-500 py-2 text-2xl mx-auto">Create New Product</h2>
+            <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded">   <button onClick={()=>navigate(-1)}>Back</button></div>
+
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <input
             onChange={(e) => setProductName(e.target.value)}
