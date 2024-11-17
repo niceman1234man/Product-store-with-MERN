@@ -42,7 +42,7 @@ const {color}=useColor();
       );
       console.log("Update result:", result);
       toast.success("Product Updated Successfully!");
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.log("Error updating product:", err);
       toast.error("Failed to update the product. Please try again.");
@@ -53,7 +53,9 @@ const {color}=useColor();
     <div className={`${color} h-[100vh] flex flex-col items-center justify-center`}>
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
       <h2 className="text-sky-500 py-2 px-auto text-2xl">Update Product</h2>
-      <div className="w-[30%] flex items-center justify-center mx-auto">
+   <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded">   <button onClick={()=>navigate(-1)}>Back</button></div>
+      <div className="w-[30%] flex items-center justify-center mx-auto ">
+    
         <form
           onSubmit={onSubmitHandler}
           className="text-black flex flex-col justify-center py-10 my-4 mx-auto bg-slate-600 p-4 w-[1240px] h-[40vh] rounded-lg"
