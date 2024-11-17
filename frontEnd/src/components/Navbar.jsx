@@ -23,12 +23,12 @@ function Navbar() {
           <img src={assets.product} alt="product logo" className="w-6" />
         </h2>
         <div className="flex justify-center items-center">
-          <img
+          {/* <img
             src={assets.add}
             alt="add"
             onClick={() => navigate("/create")}
             className="bg-slate-400 w-6 cursor-pointer"
-          />
+          /> */}
           <img
             src={assets.brightness}
             alt="brightness"
