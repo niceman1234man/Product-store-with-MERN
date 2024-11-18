@@ -48,13 +48,13 @@ function Create() {
     <div className={`${color}  flex flex-col items-center justify-center h-[90vh]`}>
       <ToastContainer position="top-center" autoClose={3000}/>
     
-      <div className="w-[30%] flex items-center justify-center mx-auto ">
+      <div className="w-[90%] flex items-center justify-center mx-auto ">
         <form
           onSubmit={onSubmitHandler}
-          className="text-black flex flex-col justify-center p-10  mx-auto bg-slate-600  w-full max-w-md "
+          className="text-black flex flex-col justify-center p-10  mx-auto bg-slate-600  w-[50%] "
         >
-            <h2 className="text-sky-500 py-2 text-2xl mx-auto">Create New Product</h2>
-            <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded">   <button onClick={()=>navigate(-1)}>Back</button></div>
+            <h2 className="text-sky-500 py-2 text-sm md:text-xl lg:text-2xl mx-auto">Create New Product</h2>
+            <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded md:text-xl">   <button onClick={()=>navigate(-1)}>Back</button></div>
 
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <input
@@ -62,7 +62,7 @@ function Create() {
             type="text"
             name="name"
             placeholder="Product Name"
-            className="p-2 m-2 outline-sky-600"
+            className="p-2 m-2 outline-sky-600 w-[90%]"
             required
           />
           <input
@@ -70,7 +70,7 @@ function Create() {
             type="number"
             placeholder="Product Price"
             name="price"
-            className="p-2 m-2 outline-sky-600"
+            className="p-2 m-2 outline-sky-600 w-[90%]"
             min="0"
             required
           />
@@ -78,11 +78,11 @@ function Create() {
   onChange={(e) => setProductURL(e.target.files[0])}
   type="file"
   name="image"
-  className="p-2 m-2 outline-sky-600"
+  className="p-2 m-2 outline-sky-600 w-[90%]"
   required
 />
 
-          <button type="submit" className="p-2 m-2 rounded-md bg-sky-900 w-[40%] mx-auto">
+          <button type="submit" className="p-2 m-2 rounded-md bg-sky-900 w-[50%] mx-auto text-sm md:text-xl">
             Create Product
           </button>
         </form>
