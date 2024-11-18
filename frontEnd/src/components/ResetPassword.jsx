@@ -22,7 +22,7 @@ function ResetPassword() {
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/products/reset/${id}/${token}`,
+        `https://product-store-with-mern.onrender.com/products/reset/${id}/${token}`,
         { password }
       );
 
