@@ -34,32 +34,32 @@ function Login() {
   return (
     <div className={`h-[90vh] ${color} text-sky-600  flex  justify-center items-center`}>
       <ToastContainer />
-      <div className="flex flex-col items-center justify-center mx-auto w-[500px] bg-slate-400 p-4  ">
-        <h2 className="text-2xl">LOGIN</h2>
-        <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
-          <label htmlFor="email" className="p-2 text-2xl">Email</label>
+      <div className="flex flex-col items-center justify-center mx-auto w-[50%] bg-slate-400 p-4 mt-12 ">
+        <h2 className="text-sm md:text-xl ">LOGIN</h2>
+        <form className="flex flex-col justify-center w-[80%] mx-auto " onSubmit={onSubmitHandler}>
+          <label htmlFor="email" className="p-2 text-sm md:text-xl ">Email</label>
           <input
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
-            className="p-2 w-[400px] outline-green-400"
+            className="p-2 w-[90%] outline-green-400"
           />
-          <label htmlFor="password" className="p-2 text-2xl">Password</label>
+          <label htmlFor="password" className="p-2 text-sm md:text-xl ">Password</label>
           <input
             id="password"
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="*******"
-            className="p-2 w-[400px] outline-green-400"
+            className="p-2 w-[90%] outline-green-400"
           />
           <button type="submit" className="p-2 bg-green-500 my-4 rounded-lg w-[30%] mx-auto font-semibold text-black">Login</button>
         </form>
-        <p className="text-xl">
+        <p className="text-sm md:text-xl ">
           Don't have an account? <Link to="/signup" className="text-violet-950">Sign Up</Link>
 
         </p>
-        <p className="text-violet-950"><Link to="/forget">Forgot Password</Link></p>
+        <p className="text-violet-950 text-sm md:text-xl "><Link to="/forget">Forgot Password</Link></p>
       </div>
     </div>
   );
