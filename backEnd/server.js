@@ -30,5 +30,5 @@ app.use(express.json());
 app.use("/products",productRoutes)
 app.listen(3000,()=>{
     connectDb();
-    console.log("server running on servrr 5000");
+    console.log("server running on servrr 3000");
 })
