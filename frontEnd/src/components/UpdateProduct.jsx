@@ -61,22 +61,22 @@ function UpdateProduct() {
   };
 
   return (
-    <div className={`${color} h-[100vh] flex flex-col items-center justify-center`}>
+    <div className={`${color} h-[90vh] flex flex-col items-center justify-center p-4 mx-auto`}>
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
-      <h2 className="text-sky-500 py-2 px-auto text-2xl">Update Product</h2>
-      <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded">
+      <h2 className="text-sky-500 py-2 px-auto text-sm md:text-xl mt-8">Update Product</h2>
+      <div className="bg-cyan-400 flex justify-start mx-auto p-2 rounded text-sm md:text-xl">
         <button onClick={() => navigate(-1)}>Back</button>
       </div>
-      <div className="w-[30%] flex items-center justify-center mx-auto ">
+      <div className="w-[90%] flex items-center justify-center mx-auto ">
         <form
           onSubmit={onSubmitHandler}
-          className="text-black flex flex-col justify-center py-10 my-4 mx-auto bg-slate-600 p-4 w-[1240px] h-[40vh] rounded-lg"
+          className="text-black flex flex-col justify-center py-10 my-4 mx-auto bg-slate-600 p-4 w-[50%] text-sm md:text-xl  "
         >
           <input
             type="text"
             name="name"
             placeholder="Product Name"
-            className="p-2 m-2 rounded-md outline-sky-600"
+            className="p-2 m-2  outline-sky-600 w-[90%]"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           />
@@ -84,19 +84,22 @@ function UpdateProduct() {
             type="number"
             placeholder="Product Price"
             name="price"
-            className="p-2 m-2 rounded-md outline-sky-600"
+            className="p-2 m-2  outline-sky-600 w-[90%]"
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
           />
           <input
             type="file"
             name="image"
-            className="p-2 m-2 rounded-md outline-sky-600"
+            className="p-2 m-2 outline-sky-600 w-[90%]"
             onChange={(e) => setProductURL(e.target.files[0])}
           />
+          <div className="felx justify-center items-center mx-auto  w-[40%]">
           <button type="submit" className="p-2 m-2 rounded-md bg-sky-900">
             Update
           </button>
+          </div>
+       
         </form>
       </div>
     </div>
