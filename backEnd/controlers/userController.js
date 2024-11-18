@@ -105,7 +105,7 @@ export const ForgotPassword = async (req, res) => {
       });
   
       
-      const resetUrl = `http://localhost:5173/reset/${user._id}/${accessToken}`;
+      const resetUrl = `https://product-store-with-mern-front.onrender.com/${user._id}/${accessToken}`;
       const mailOptions = {
         from: process.env.USER_EMAIL,
         to: user.email,
