@@ -34,48 +34,58 @@ export const getProduct = async (req, res) => {
         res.status(500).json({ success: false, message: "Server failed to fetch products." });
     }
 };
- export const getProductById=async(req,res)=>{
-    try {
-        const {id}=req.params;
-     const products=await Product.findById(id);
-     res.status(200).json({success:true,data:products});
- 
-    } catch (error) {
-     console.log("error",error.message);
-     res.status(500).json({success:false,message:"server failed"})
-    }
- };
-
- export const updateproduct =async (req, res) => {
+export const getProductById = async (req, res) => {
+  try {
     const { id } = req.params;
-    const { name, price} = req.body;
-     
-      if (!name || !price || !req.file) {
-        return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
-      }
-  const image=req.file.path;
-
-    // Check if the provided ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ success: false, message: "Invalid product ID" });
+      return res.status(400).json({ success: false, message: 'Invalid product ID' });
     }
 
-    try {
+    const product = await Product.findById(id);
 
-        const updatedProduct = await Product.findByIdAndUpdate(id, {name,price,image}, { new: true });
-
-        // Check if the product was found and updated
-        if (!updatedProduct) {
-            return res.status(404).json({ success: false, message: "Product not found" });
-        }
-
-        res.status(200).json({ success: true, data: updatedProduct });
-    } catch (error) {
-        console.error("Error", error.message);
-        res.status(500).json({ success: false, message: "Product not updated" });
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Product not found' });
     }
+
+    res.status(200).json({ success: true, data: product });
+  } catch (error) {
+    console.log('Error fetching product:', error.message); // More detailed error logging
+    res.status(500).json({ success: false, message: 'Server failed', error: error.message });
+  }
 };
 
+
+ export const updateproduct = async (req, res) => {
+   const { id } = req.params;
+   const { name, price } = req.body;
+ 
+   if (!name || !price || !req.file) {
+     return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
+   }
+ 
+   const image = req.file.filename;
+ 
+   // Check if the provided ID is valid
+   if (!mongoose.Types.ObjectId.isValid(id)) {
+     return res.status(404).json({ success: false, message: "Invalid product ID" });
+   }
+ 
+   try {
+     // Find and update the product
+     const updatedProduct = await Product.findByIdAndUpdate(id, { name, price, image }, { new: true });
+ 
+     // Check if the product was found and updated
+     if (!updatedProduct) {
+       return res.status(404).json({ success: false, message: "Product not found" });
+     }
+ 
+     res.status(200).json({ success: true, data: updatedProduct });
+   } catch (error) {
+     console.error("Error", error.message);
+     res.status(500).json({ success: false, message: "Product not updated" });
+   }
+ };
+ 
 export const createProduct = async (req, res) => {
   const {userId}=req.userInfo;
 
@@ -87,7 +97,7 @@ export const createProduct = async (req, res) => {
       if (!name || !price || !req.file) {
         return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
       }
-  const image=req.file.path;
+  const image=req.file.filename;
       // Create a new product with the provided data and associate it with the user
       const newProduct = new Product({
         name,
