@@ -9,26 +9,34 @@ function Navbar() {
   const [cookies, removeCookie] = useCookies([]);
   const handleLogout = () => {
     removeCookie("token");
-    navigate("/login"); // Redirect to login page
+    navigate("/"); // Redirect to login page
   };
 
+const gotoCreate=()=>{
+  if(!cookies.token){
+    navigate("/");
+  }else{
+    navigate("/create")
+  }
+}
+
   return (
-    <div className={`fixed ${color} text-sky-400 px-auto w-[1240px]  py-4 h-[10%]`}>
+    <div className={`fixed ${color} text-sky-400 px-auto w-full py-4 h-[10%]`}>
       <div className="flex items-center justify-between mx-60">
         <h2
           className="flex gap-2 items-center justify-center py-4 font-bold cursor-pointer"
-      
+          onClick={() => navigate("/")}
         >
           PRODUCT STORE
           <img src={assets.product} alt="product logo" className="w-6" />
         </h2>
         <div className="flex justify-center items-center">
-          {/* <img
+          <img
             src={assets.add}
             alt="add"
-            onClick={() => navigate("/create")}
+            onClick={gotoCreate }
             className="bg-slate-400 w-6 cursor-pointer"
-          /> */}
+          />
           <img
             src={assets.brightness}
             alt="brightness"
