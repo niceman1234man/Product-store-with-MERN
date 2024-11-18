@@ -1,36 +1,47 @@
-import React, {  useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams for accessing URL parameters
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
 
 function ResetPassword() {
-  const { user, token } = useParams(); // Get UID and Token from the URL
+  const navigate = useNavigate();
+  const { id, token } = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+
+  console.log("User ID:", id, "Token:", token); // Debugging
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match.');
+      toast.error('Passwords do not match.'); // Show error toast
       return;
     }
 
     try {
-      const response = await axios.post(`http://localhost:3000/products/reset/${user}/${token}`, { password });
-      setMessage('Password changed successfully!');
-      console.log(response.data);
+      const response = await axios.post(
+        `http://localhost:3000/products/reset/${id}/${token}`,
+        { password }
+      );
+
+      if (response.data.success) {
+        toast.success('Password changed successfully!'); // Show success toast
+        navigate("/"); // Redirect to the home page after success
+      } else {
+        toast.error('Error changing password. Please try again.'); // Error toast
+      }
     } catch (error) {
-      setMessage('Error changing password. Please try again.');
-      console.error(error);
+      toast.error('Error changing password. Please try again.'); // Show error toast if axios request fails
+      console.error("Axios Error:", error);
     }
   };
-
 
   return (
     <div className="text-sky-600 h-[90vh] flex justify-center items-center">
       <div className="flex flex-col items-center justify-center mx-auto w-[500px] bg-slate-400 p-4">
         <h2 className="text-2xl">Reset Password</h2>
-        {message && <p className="text-red-500">{message}</p>}
         <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
           <label htmlFor="password" className="p-2 text-2xl">New Password</label>
           <input
