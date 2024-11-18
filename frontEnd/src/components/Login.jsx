@@ -57,7 +57,9 @@ function Login() {
         </form>
         <p className="text-xl">
           Don't have an account? <Link to="/signup" className="text-violet-950">Sign Up</Link>
+
         </p>
+        <p className="text-violet-950"><Link to="/forget">Forgot Password</Link></p>
       </div>
     </div>
   );
