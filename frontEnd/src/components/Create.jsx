@@ -13,6 +13,11 @@ function Create() {
   const [productURL, setProductURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+    const formData = new FormData();
+    formData.append("name", productName);
+    formData.append("price", productPrice);
+    formData.append("image", productURL);
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
@@ -20,19 +25,20 @@ function Create() {
     setErrorMessage("");
 
     try {
+      console.log("Product creation result:", formData);
       const result = await axios.post(
         "http://localhost:3000/products/create",
+        formData, 
         {
-          name: productName,
-          price: productPrice,
-          image: productURL,
-        },
-        { withCredentials: true } // Include cookies for auth
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true, 
+        }
       );
-
       console.log("Product creation result:", result);
       toast.success("New Product Added Successfully!");
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       console.error("Error creating product:", err);
       toast.error("Failed to add the product. Please try again.");
@@ -41,7 +47,7 @@ function Create() {
   };
 
   return (
-    <div className={`${color} h-screen flex flex-col items-center justify-center`}>
+    <div className={`${color}  flex flex-col items-center justify-center h-[90vh]`}>
       <ToastContainer position="top-center" autoClose={3000}/>
     
       <div className="w-[30%] flex items-center justify-center mx-auto ">
@@ -56,6 +62,7 @@ function Create() {
           <input
             onChange={(e) => setProductName(e.target.value)}
             type="text"
+            name="name"
             placeholder="Product Name"
             className="p-2 m-2 outline-sky-600"
             required
@@ -64,17 +71,19 @@ function Create() {
             onChange={(e) => setProductPrice(e.target.value)}
             type="number"
             placeholder="Product Price"
+            name="price"
             className="p-2 m-2 outline-sky-600"
             min="0"
             required
           />
-          <input
-            onChange={(e) => setProductURL(e.target.value)}
-            type="text"
-            placeholder="Image URL"
-            className="p-2 m-2  outline-sky-600"
-            required
-          />
+        <input
+  onChange={(e) => setProductURL(e.target.files[0])}
+  type="file"
+  name="image"
+  className="p-2 m-2 outline-sky-600"
+  required
+/>
+
           <button type="submit" className="p-2 m-2 rounded-md bg-sky-900 w-[40%] mx-auto">
             Create Product
           </button>
