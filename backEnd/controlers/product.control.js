@@ -90,22 +90,20 @@ export const createProduct = async (req, res) => {
 
 
     try {
-      // Validate that all required fields are provided
       const { name, price} = req.body;
      
       if (!name || !price || !req.file) {
         return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
       }
   const image=req.file.filename;
-      // Create a new product with the provided data and associate it with the user
       const newProduct = new Product({
         name,
         price,
         image,
-        user:userId, // `user` is added to req by the auth middleware
+        user:userId,
       });
   
-      // Save the product to the database
+    
       await newProduct.save();
   
       // Respond with success and the new product data
