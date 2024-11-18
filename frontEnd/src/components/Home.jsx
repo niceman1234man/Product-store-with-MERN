@@ -13,12 +13,7 @@ function Home() {
   const [products, setProductsLocal] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("Token:", cookies.token); // Debugging token value
-    if (!cookies.token) {
-      console.log("No token found, navigating to login...");
-      navigate("/");
-      return;
-    }
+
     const fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:3000/products/user", {
@@ -90,8 +85,8 @@ function Home() {
             />
             {console.log(product.image)}
             <div className="flex gap-2 items-center justify-center">
-              <p className="p-2">{product.name}</p>
-              <p>{product.price} $</p>
+              <p className="p-2 text-sm md:text-xl ">{product.name}</p>
+              <p className="text-sm md:text-xl ">{product.price} $</p>
             </div>
             <div className="flex gap-2 items-center justify-center my-2">
               <Link to={`/update/${product._id}`}>
@@ -104,7 +99,7 @@ function Home() {
           </div>
         ))
       ) : (
-        <h1 className="text-white text-center text-2xl h-[90vh]">No products available</h1>
+        <h1 className="text-red-700 text-center text-sm md:text-xl  h-[90vh]">No products available</h1>
       )}
     </div>
     </div>
