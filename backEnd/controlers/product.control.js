@@ -1,6 +1,7 @@
 import Product from '../models/product.model.js';
 import mongoose from 'mongoose';
 
+
 export const getProduct = async (req, res) => {
     const { userId } = req.userInfo;
 
@@ -47,7 +48,12 @@ export const getProduct = async (req, res) => {
 
  export const updateproduct =async (req, res) => {
     const { id } = req.params;
-    const product = req.body;
+    const { name, price} = req.body;
+     
+      if (!name || !price || !req.file) {
+        return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
+      }
+  const image=req.file.path;
 
     // Check if the provided ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -56,7 +62,7 @@ export const getProduct = async (req, res) => {
 
     try {
 
-        const updatedProduct = await Product.findByIdAndUpdate(id, product, { new: true });
+        const updatedProduct = await Product.findByIdAndUpdate(id, {name,price,image}, { new: true });
 
         // Check if the product was found and updated
         if (!updatedProduct) {
@@ -76,11 +82,12 @@ export const createProduct = async (req, res) => {
 
     try {
       // Validate that all required fields are provided
-      const { name, price, image } = req.body;
-      if (!name || !price || !image) {
+      const { name, price} = req.body;
+     
+      if (!name || !price || !req.file) {
         return res.status(400).json({ success: false, message: "Please provide all fields (name, price, image)" });
       }
-  
+  const image=req.file.path;
       // Create a new product with the provided data and associate it with the user
       const newProduct = new Product({
         name,
