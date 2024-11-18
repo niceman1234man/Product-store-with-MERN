@@ -13,7 +13,7 @@ function ForgotPassword() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/products/forget', { email });
+      const res = await axios.post('https://product-store-with-mern.onrender.com/products/forget', { email });
       if (res.data.success) {
         toast.success('Password reset link sent to your email!');
         setTimeout(() => {
