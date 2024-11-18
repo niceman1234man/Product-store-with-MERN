@@ -20,8 +20,6 @@ function Create() {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-
-    // Reset error message before making the request
     setErrorMessage("");
 
     try {
