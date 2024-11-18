@@ -14,7 +14,8 @@ router.get("/:id",userVerify,getProductById)
  router.post('/signup',Signup);
  router.post('/login',Login);
 router.post('/forget',ForgotPassword);
-router.post('/reset/:user/:token',ResetPassword);
+router.post('/reset/:id/:token', ResetPassword);
+
 
 
 
