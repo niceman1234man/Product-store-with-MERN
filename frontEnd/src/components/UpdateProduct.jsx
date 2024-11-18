@@ -4,16 +4,20 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useColor } from "../Context/ColorContextProvider";
+import mongoose from 'mongoose'; // Import mongoose to validate ObjectId
 
 function UpdateProduct() {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [productURL, setProductURL] = useState();
+  const [productURL, setProductURL] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const { color } = useColor();
 
+  // Validate the id before making the API request
   useEffect(() => {
+   console.log("id",id)
+
     const fetchProduct = async () => {
       try {
         const result = await axios.get(`http://localhost:3000/products/${id}`, {
@@ -30,20 +34,22 @@ function UpdateProduct() {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, navigate]); // Include navigate as a dependency
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", productName);
     formData.append("price", productPrice);
-    formData.append("image", productURL);
+    if (productURL) {
+      formData.append("image", productURL);
+    }
 
     try {
       const result = await axios.put(
         `http://localhost:3000/products/${id}`,
         formData,
-        { withCredentials: true }
+        { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
       );
       console.log("Update result:", result);
       toast.success("Product Updated Successfully!");
@@ -82,7 +88,6 @@ function UpdateProduct() {
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
           />
-          
           <input
             type="file"
             name="image"
