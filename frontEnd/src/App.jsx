@@ -22,7 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/" element={<Login/>} />
         <Route path="/forget" element={<ForgotPassword/>}/>
-        <Route path="/reset" element={<ResetPassword/>}/>
+        <Route path="/reset/:id/:token" element={<ResetPassword/>}/>
       </Routes>
       <Footer/>
     </ColorContextProvider>
