@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import productRoutes from './routes/product.route.js'
 import cors from 'cors'
 import path from 'path';
+import dotenv from'dotenv';
 
 import { fileURLToPath } from 'url';
 
@@ -12,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve static files
-
+dotenv.config();
 
 const app=express();
 app.use(cookieParser());
@@ -28,7 +29,11 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use("/products",productRoutes)
-app.listen(3000,()=>{
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port,()=>{
     connectDb();
     console.log("server running on servrr 3000");
 })
