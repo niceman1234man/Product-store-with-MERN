@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useColor } from "../Context/ColorContextProvider";
 
-
 function Home() {
   const {color}=useColor();
   const [cookies, removeCookie] = useCookies([]);
