@@ -10,7 +10,7 @@ function SignUp() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const result = await axios.post("https://product-store-with-mern.onrender.com/products/signup", {
+      const result = await axios.post("https://product-store-with-mern-back.onrender.com/products/signup", {
         username,
         email,
         password,
