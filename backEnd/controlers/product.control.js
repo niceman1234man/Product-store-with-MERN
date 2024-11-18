@@ -71,10 +71,9 @@ export const getProductById = async (req, res) => {
    }
  
    try {
-     // Find and update the product
-     const updatedProduct = await Product.findByIdAndUpdate(id, { name, price, image }, { new: true });
  
-     // Check if the product was found and updated
+     const updatedProduct = await Product.findByIdAndUpdate(id, { name, price, image }, { new: true });
+
      if (!updatedProduct) {
        return res.status(404).json({ success: false, message: "Product not found" });
      }
