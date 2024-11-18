@@ -32,7 +32,7 @@ function Home() {
       }
     };
     fetchData();
-  }, [cookies.token, navigate]);
+  }, [cookies.token, navigate,removeCookie]);
   
   
 
@@ -53,7 +53,10 @@ function Home() {
       }
     }
   };
-
+  const handleLogout = () => {
+    removeCookie("token");
+    navigate("/"); // Redirect to login page
+  };
 
   return (
     <div className="h-[90vh]  ">
@@ -61,12 +64,16 @@ function Home() {
      
       
       <ToastContainer />
-      <div className="flex justify-end mr-8"><img
+      <div className="flex justify-end mr-8 items-center mx-auto"><img
             src={assets.add}
             alt="add"
             onClick={() => navigate("/create")}
             className="bg-slate-400 w-6 cursor-pointer "
-          /></div>
+          />
+            <button onClick={handleLogout} className="text-white p-1 m-4 bg-red-500 rounded ">
+        Logout
+      </button>
+          </div>
       
     <div className="grid md:grid-cols-2 lg:grid-cols-3 py-12 mx-auto  gap-3">
    
@@ -77,10 +84,11 @@ function Home() {
             className="w-[100%] p-4 my-2 mx-auto text-sky-500 text-center font-bold flex flex-col items-center justify-center"
           >
             <img
-              src={product.image}
+              src={`http://localhost:3000/uploads/${product.image}`}
               alt={product.name}
               className="bg-white w-[200px] h-[200px] rounded-lg"
             />
+            {console.log(product.image)}
             <div className="flex gap-2 items-center justify-center">
               <p className="p-2">{product.name}</p>
               <p>{product.price} $</p>
@@ -96,7 +104,7 @@ function Home() {
           </div>
         ))
       ) : (
-        <h1 className="text-white text-center text-2xl">No products available</h1>
+        <h1 className="text-white text-center text-2xl h-[90vh]">No products available</h1>
       )}
     </div>
     </div>
