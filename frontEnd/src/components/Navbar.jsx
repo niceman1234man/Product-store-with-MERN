@@ -1,39 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
-
+import { useColor } from "../Context/ColorContextProvider";
 function Navbar() {
-  const navigate = useNavigate();
-  const [color, setColor] = useState("bg-gray-950");
-
-  const toggleColor = () => {
-    setColor((prevColor) =>
-      prevColor === "bg-gray-950" ? "bg-white" : "bg-gray-950"
-    );
-  };
-
+  const { color, toggleColor } = useColor();
   return (
-    <div className={`${color} text-sky-400 px-auto`}>
-      <div className="flex items-center justify-between mx-60">
-        <h2
-          className="flex gap-2 items-center justify-center py-4 font-bold cursor-pointer"
-          onClick={() => navigate("/home")}
-        >
+    <div className={`fixed ${color} text-sky-400 px-auto w-full py-4 h-[10%] mx-auto`}>
+      <div className="flex items-center justify-center  mx-auto  ">
+        <h2 className="flex gap-2 items-center justify-center py-4 font-bold cursor-pointer mr-[5%] text-sm md:text-xl lg:text-2xl">
           PRODUCT STORE
           <img src={assets.product} alt="product logo" className="w-6" />
         </h2>
-        <div className="flex gap-1">
-          <img
-            src={assets.add}
-            alt="add"
-            onClick={() => navigate("/create")}
-            className="bg-slate-400 w-6 cursor-pointer"
-          />
+        <div className="flex justify-center items-center">
           <img
             src={assets.brightness}
             alt="brightness"
             onClick={toggleColor}
-            className="bg-slate-400 w-5 cursor-pointer"
+            className="bg-slate-400 w-5 cursor-pointer mx-2"
           />
         </div>
       </div>
