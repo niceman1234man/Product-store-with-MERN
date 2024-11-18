@@ -23,7 +23,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use(cors({
-    origin:"https://product-store-with-mern-front.onrender.com",
+    origin:"https://product-store-with-mern-1.onrender.com",
     methods:["GET","PUT","DELETE","POST"],
     credentials:true,
 }));
