@@ -40,17 +40,17 @@ function ResetPassword() {
 
   return (
     <div className="text-sky-600 h-[90vh] flex justify-center items-center">
-      <div className="flex flex-col items-center justify-center mx-auto w-[500px] bg-slate-400 p-4">
-        <h2 className="text-2xl">Reset Password</h2>
+      <div className="flex flex-col items-center justify-center mx-auto w-[50%] bg-slate-400 p-4">
+        <h2 className="text-sm md:text-xl ">Reset Password</h2>
         <form className="flex flex-col justify-center" onSubmit={onSubmitHandler}>
-          <label htmlFor="password" className="p-2 text-2xl">New Password</label>
+          <label htmlFor="password" className="p-2 text-sm md:text-xl ">New Password</label>
           <input
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="*******"
-            className="p-2 w-[400px] outline-green-400"
+            className="p-2 w-[90%] outline-green-400"
           />
           <label htmlFor="confirm-password" className="p-2 text-2xl">Confirm Password</label>
           <input
@@ -59,11 +59,11 @@ function ResetPassword() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             type="password"
             placeholder="*******"
-            className="p-2 w-[400px] outline-green-400"
+            className="p-2 w-[90%] outline-green-400"
           />
           <button
             type="submit"
-            className="p-2 bg-green-500 my-4 rounded-lg w-[30%] mx-auto font-semibold text-black"
+            className="p-2 bg-green-500 my-4 rounded-lg w-[30%] mx-auto font-semibold text-black text-sm md:text-xl "
           >
             Change Password
           </button>
