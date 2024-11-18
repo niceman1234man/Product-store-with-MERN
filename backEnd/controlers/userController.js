@@ -26,7 +26,7 @@ export const Signup = async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, email: user.email, username: user.username },
             process.env.TOKEN_KEY,
-            { expiresIn: "3d" } // expires in 3 days
+            { expiresIn: "3d" } 
         );
 
         res.cookie("token", token, {
@@ -80,71 +80,85 @@ export const Login = async (req, res) => {
     }
 };
 
-export const ForgotPassword=async(req,res)=>{
-const {email}=req.body;
-try {
-   const user=await User.findOne(email) ;
-   if(!user){
-    return res.status(401).json({sucess:true,message:"user not exist try again"})
-   }
-   const accessToken = jwt.sign(
-    { userId: user._id, },
-    process.env.TOKEN_KEY,
-    { expiresIn: "3d" }
-);
-
-
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.USER_EMAIL,
-    pass: process.env.PASSWORD
-  }
-});
-
-var mailOptions = {
-  from: process.env.USER_EMAIL,
-  to: `${user.email}`,
-  subject: 'Reset Your Password',
-  text:`http://localhost:5173//reset/${user._id}/${accessToken}`
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    res.json({sucess:true})
-  }
-});
-} catch (error) {
-    console.log(error)
-    res.status(500).json({ message: "Internal server error" });
-}
-
-}
-
-export const ResetPassword=(req,res)=>{
-    const {id,token}=req.params;
-    const {password}=req.body;
-    jwt.verify(token, process.env.TOKEN_KEY,(err,decoded)=>{
-        if(err){
-            return res.json({sucess:false,message:"Error token"});
-        }else{
-            try {
-    
-                const hashedPassword=bcrypt.hash(password,12);
-                User.findByIdAndUpdate({_id:userId,password:hashedPassword}).then(()=>{
-                    res.status(200).json({sucess:true,message:"Password reseted sucessfully"})
-                }).catch((err)=>{
-            console.log(err);
-                })
-            } catch (error) {
-                console.log(error)
-                res.status(500).json({ message: "Internal server error" });   
-            }
-              
+export const ForgotPassword = async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(200).json({ success: true, message: "If the email exists, a reset link will be sent." });
+      }
+  
+      console.log(`Password reset requested for: ${email}`);
+      const accessToken = jwt.sign(
+        { userId: user._id },
+        process.env.TOKEN_KEY,
+        { expiresIn: "3d" }
+      );
+ 
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.USER_EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      });
+  
+      
+      const resetUrl = `http://localhost:5173/reset/${user._id}/${accessToken}`;
+      const mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: user.email,
+        subject: 'Reset Your Password',
+        text: `Click the link below to reset your password:${resetUrl}`,
+      };
+  
+   
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email:", error);
+          return res.status(500).json({ success: false, message: "Error sending email. Please try again later." });
         }
-    });
+        console.log(`Password reset email sent: ${info.response}`);
+        res.status(200).json({ success: true, message: "Password reset link sent to your email." });
+      });
+  
+    } catch (error) {
+      console.error("Internal server error:", error);
+      res.status(500).json({ success: false, message: "Internal server error. Please try again later." });
+    }
+  };
+  
 
-}
+  export const ResetPassword = async (req, res) => {
+    const { id, token } = req.params;
+    const { password } = req.body;
+     console.log("id of :",id);
+     console.log("token :",token);
+    try {
+      const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+      if (decoded.userId !== id) {
+        return res.status(400).json({ success: false, message: "Invalid token or user ID mismatch." });
+      }
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const user = await User.findByIdAndUpdate(
+        id,
+        { password: hashedPassword },
+        { new: true }
+      );
+  
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found." });
+      }
+  
+      res.status(200).json({ success: true, message: "Password reset successfully." });
+    } catch (error) {
+      if (error.name === "JsonWebTokenError") {
+        return res.status(400).json({ success: false, message: "Invalid token." });
+      }
+  
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    }
+  };
+  
