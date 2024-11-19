@@ -16,7 +16,7 @@ function Home() {
 
     const fetchData = async () => {
       try {
-        const result = await axios.get("https://product-store-with-mern-back.onrender.com/products/user", {
+        const result = await axios.get("https://product-store-with-mern-back2.onrender.com0/products/user", {
           withCredentials: true,
         });
         console.log("API Result:", result); // Check API response
@@ -36,7 +36,7 @@ function Home() {
   const onDeleteHandler = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`https://product-store-with-mern-back.onrender.com/products/${id}`, {
+        await axios.delete(`https://product-store-with-mern-back2.onrender.com/products/${id}`, {
           withCredentials: true,
         });
         // Update local state after deletion

@@ -14,7 +14,6 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files
 dotenv.config();
-
 const app=express();
 app.use(cookieParser());
 

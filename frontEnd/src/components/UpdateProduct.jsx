@@ -20,7 +20,7 @@ function UpdateProduct() {
 
     const fetchProduct = async () => {
       try {
-        const result = await axios.get(`https://product-store-with-mern-back.onrender.com/products/${id}`, {
+        const result = await axios.get(`https://product-store-with-mern-back2.onrender.com/products/${id}`, {
           withCredentials: true,
         });
         console.log("API Result:", result.data);
@@ -47,7 +47,7 @@ function UpdateProduct() {
 
     try {
       const result = await axios.put(
-        `https://product-store-with-mern-back.onrender.com/products/${id}`,
+        `https://product-store-with-mern-back2.onrender.com/products/${id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
       );
