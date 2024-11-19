@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useColor } from "../Context/ColorContextProvider";
-import mongoose from 'mongoose'; // Import mongoose to validate ObjectId
+
 
 function UpdateProduct() {
   const [productName, setProductName] = useState("");
