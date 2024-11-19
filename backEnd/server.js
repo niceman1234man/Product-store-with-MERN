@@ -22,7 +22,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use(cors({
-    origin:"https://new-yonni-product.netlify.app",
+    origin:"https://yihunie-product-store.netlify.app",
     methods:["GET","PUT","DELETE","POST"],
     credentials:true,
 }));

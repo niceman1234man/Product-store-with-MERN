@@ -105,7 +105,7 @@ export const ForgotPassword = async (req, res) => {
       });
   
       
-      const resetUrl = `https://new-yonni-product.netlify.app/${user._id}/${accessToken}`;
+      const resetUrl = `https://yihunie-product-store.netlify.app/${user._id}/${accessToken}`;
       const mailOptions = {
         from: process.env.USER_EMAIL,
         to: user.email,
