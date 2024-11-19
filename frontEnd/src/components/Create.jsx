@@ -25,7 +25,7 @@ function Create() {
     try {
       console.log("Product creation result:", formData);
       const result = await axios.post(
-        "http://localhost:3000/products/create",
+        "https://product-store-with-mern.onrender.com/products/create",
         formData, 
         {
           headers: {

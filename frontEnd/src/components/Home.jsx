@@ -16,7 +16,7 @@ function Home() {
 
     const fetchData = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/products/user", {
+        const result = await axios.get("https://product-store-with-mern.onrender.com/products/user", {
           withCredentials: true,
         });
         console.log("API Result:", result); // Check API response
@@ -36,7 +36,7 @@ function Home() {
   const onDeleteHandler = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:3000/products/${id}`, {
+        await axios.delete(`https://product-store-with-mern.onrender.com/products/${id}`, {
           withCredentials: true,
         });
         // Update local state after deletion
@@ -79,7 +79,7 @@ function Home() {
             className="w-[100%] p-4 my-2 mx-auto text-sky-500 text-center font-bold flex flex-col items-center justify-center"
           >
             <img
-              src={`http://localhost:3000/uploads/${product.image}`}
+              src={`https://product-store-with-mern.onrender.com/uploads/${product.image}`}
               alt={product.name}
               className="bg-white w-[200px] h-[200px] rounded-lg"
             />
