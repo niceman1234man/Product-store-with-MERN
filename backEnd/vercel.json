@@ -1,16 +1,18 @@
 {
-    "crons": [
+    "version": 2,
+    "builds": [
       {
-        "path": "/api/every-minute",
-        "schedule": "* * * * *"
-      },
+        "src": "server.js",
+        "use": "@vercel/node",
+        "config": {
+          "includeFiles": ["db.json"]
+        }
+      }
+    ],
+    "routes": [
       {
-        "path": "/api/every-hour",
-        "schedule": "0 * * * *"
-      },
-      {
-        "path": "/api/every-day",
-        "schedule": "0 0 * * *"
+        "src": "/(.*)",
+        "dest": "server.js"
       }
     ]
   }
