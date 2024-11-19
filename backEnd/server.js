@@ -15,20 +15,18 @@ const __dirname = path.dirname(__filename);
 // Serve static files
 dotenv.config();
 const app=express();
-app.use(cookieParser());
-
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 
 app.use(cors({
-    origin:"https://yihunie-product-store.netlify.app",
-    methods:["GET","PUT","DELETE","POST"],
-    credentials:true,
+  origin:"https://yihunie-product-store.netlify.app",
+  methods:["GET","PUT","DELETE","POST"],
+  credentials:true,
 }));
+app.use(cookieParser());
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use("/products",productRoutes)
-let port = process.env.PORT;
+let port = process.env.PORT ||8000;
 if (port == null || port == "") {
   port = 8000;
 }
