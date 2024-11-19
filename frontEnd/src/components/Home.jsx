@@ -16,7 +16,7 @@ function Home() {
 
     const fetchData = async () => {
       try {
-        const result = await axios.get("https://product-store-with-mern-back2.onrender.com0/products/user", {
+        const result = await axios.get("https://product-store-with-mern-back2.onrender.com/products/user", {
           withCredentials: true,
         });
         console.log("API Result:", result); // Check API response
