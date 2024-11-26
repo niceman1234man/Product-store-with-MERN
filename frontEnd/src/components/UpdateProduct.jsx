@@ -53,6 +53,9 @@ function UpdateProduct() {
       );
       console.log("Update result:", result);
       toast.success("Product Updated Successfully!");
+      setProductName("");
+        setProductPrice(0);
+        setProductURL("");
       navigate("/home");
     } catch (err) {
       console.log("Error updating product:", err);
