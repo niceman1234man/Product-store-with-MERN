@@ -20,6 +20,8 @@ function Login() {
           // // Store token in localStorage
           // localStorage.setItem("accessToken", response.data.accessToken);
           toast.success("Login successful!");
+          setEmail("");
+          setPassword("");
           navigate("/home");  // Redirect after successful login
         } else {
           toast.error(response.data.message || "Login failed.");
