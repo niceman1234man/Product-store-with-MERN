@@ -17,6 +17,9 @@ function SignUp() {
       }, { withCredentials: true });
       console.log(result);
       alert("Sign up successful");
+      setUserName("");
+      setEmail("");
+      setPassword("");
     } catch (err) {
       console.log(err);
       alert("Sign up failed. Please try again.");
