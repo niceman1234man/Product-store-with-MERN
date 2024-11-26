@@ -36,6 +36,9 @@ function Create() {
       );
       console.log("Product creation result:", result);
       toast.success("New Product Added Successfully!");
+      setProductName("");
+        setProductPrice(0);
+        setProductURL("");
       navigate("/home");
     } catch (err) {
       console.error("Error creating product:", err);
